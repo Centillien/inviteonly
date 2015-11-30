@@ -1,17 +1,17 @@
 <?php
 
-myvox_register_event_handler('init', 'system', 'inviteonly_init');
+elgg_register_event_handler('init', 'system', 'inviteonly_init');
 
 /**
  * Initialisate the plugin
  */
 function inviteonly_init() {
-    myvox_register_event_handler('action', 'register', 'inviteonly_post_handler');
+    elgg_register_event_handler('action', 'register', 'inviteonly_post_handler');
 
-    myvox_unregister_page_handler('register');
-    myvox_register_page_handler('register', 'inviteonly_page_handler');
+    elgg_unregister_page_handler('register');
+    elgg_register_page_handler('register', 'inviteonly_page_handler');
 
-    myvox_register_page_handler('invite-only', 'inviteonly_page_handler');
+    elgg_register_page_handler('invite-only', 'inviteonly_page_handler');
 }
 
 /**
@@ -26,7 +26,7 @@ function inviteonly_page_handler($page_elements, $handler) {
 
     if ($handler == 'invite-only') {
 
-        require_once myvox_get_plugins_path() . 'inviteonly/pages/inviteonly.php';
+        require_once elgg_get_plugins_path() . 'inviteonly/pages/inviteonly.php';
 
         return true;
     }
@@ -36,7 +36,7 @@ function inviteonly_page_handler($page_elements, $handler) {
         if (get_input('invitecode') && get_input('friend_guid')) {
             $friend = get_user(get_input('friend_guid'));
 
-            if (!myvox_instanceof($friend, 'user')) {
+            if (!elgg_instanceof($friend, 'user')) {
                 return inviteonly_redirect();
             }
 
@@ -46,7 +46,7 @@ function inviteonly_page_handler($page_elements, $handler) {
                 return inviteonly_redirect();
             }
 
-            require_once myvox_get_root_path() . 'pages/account/register.php';
+            require_once elgg_get_root_path() . 'pages/account/register.php';
 
             return true;
         }
@@ -71,7 +71,7 @@ function inviteonly_post_handler($event, $object_type, $object) {
     if (get_input('invitecode') && get_input('friend_guid')) {
         $friend = get_user(get_input('friend_guid'));
 
-        if (!myvox_instanceof($friend, 'user')) {
+        if (!elgg_instanceof($friend, 'user')) {
             return inviteonly_redirect();
         }
 
