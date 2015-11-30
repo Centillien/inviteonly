@@ -10,10 +10,12 @@ function inviteonly_init() {
 
     myvox_unregister_page_handler('register');
     myvox_register_page_handler('register', 'inviteonly_page_handler');
+
+    myvox_register_page_handler('invite-only', 'inviteonly_page_handler');
 }
 
 /**
- * Page handler for register page
+ * Page handler for register and invite-only page
  *
  * @param array $page_elements Page elements
  * @param string $handler The handler string
@@ -22,29 +24,37 @@ function inviteonly_init() {
  */
 function inviteonly_page_handler($page_elements, $handler) {
 
-    if ($handler != 'register') {
-        return inviteonly_redirect();
-    }
+    if ($handler == 'invite-only') {
 
-    if (get_input('invitecode') && get_input('friend_guid')) {
-        $friend = get_user(get_input('friend_guid'));
-
-        if (!myvox_instanceof($friend, 'user')) {
-            return inviteonly_redirect();
-        }
-
-        $friend_invitecode = generate_invite_code($friend->username);
-
-        if ($friend_invitecode !== get_input('invitecode')) {
-            return inviteonly_redirect();
-        }
-
-        require_once myvox_get_root_path() . 'pages/account/register.php';
+        require_once myvox_get_plugins_path() . 'inviteonly/pages/inviteonly.php';
 
         return true;
     }
 
-    return inviteonly_redirect();
+    if ($handler == 'register') {
+
+        if (get_input('invitecode') && get_input('friend_guid')) {
+            $friend = get_user(get_input('friend_guid'));
+
+            if (!myvox_instanceof($friend, 'user')) {
+                return inviteonly_redirect();
+            }
+
+            $friend_invitecode = generate_invite_code($friend->username);
+
+            if ($friend_invitecode !== get_input('invitecode')) {
+                return inviteonly_redirect();
+            }
+
+            require_once myvox_get_root_path() . 'pages/account/register.php';
+
+            return true;
+        }
+
+        return inviteonly_redirect();
+    }
+
+    return false;
 }
 
 /**
