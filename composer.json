@@ -1,0 +1,16 @@
+{
+  "name": "centillien/inviteonly",
+  "description": "Enables your Elgg website to be Invite Only using the core module Invite Friend.",
+  "type": "elgg-plugin",
+  "keywords": [
+    "elgg",
+    "plugin"
+  ],
+  "license": "GPL-2.0",
+  "authors": [
+    {
+      "name": "Wouter van Os",
+      "email": "wouter@wouter0100.nl"
+    }
+  ]
+}
