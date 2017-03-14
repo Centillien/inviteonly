@@ -75,7 +75,7 @@ function inviteonly_post_handler($event, $object_type, $object) {
             return inviteonly_redirect();
         }
 
-        if (!elgg_validate_invite_code($friend_user->username, get_input('invitecode'))) {
+        if (!elgg_validate_invite_code($friend->username, get_input('invitecode'))) {
             return inviteonly_redirect();
         }
 
