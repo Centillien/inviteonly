@@ -25,9 +25,7 @@ function inviteonly_init() {
 function inviteonly_page_handler($page_elements, $handler) {
 
     if ($handler == 'invite-only') {
-
         require_once elgg_get_plugins_path() . 'inviteonly/pages/inviteonly.php';
-
         return true;
     }
 
@@ -40,14 +38,13 @@ function inviteonly_page_handler($page_elements, $handler) {
                 return inviteonly_redirect();
             }
 
-            $friend_invitecode = generate_invite_code($friend->username);
+            $friend_invitecode = elgg_validate_invite_code($friend->username, get_input('invitecode'));
 
-            if ($friend_invitecode !== get_input('invitecode')) {
+            if (!$friend_invitecode) {
                 return inviteonly_redirect();
             }
 
-            require_once elgg_get_root_path() . 'pages/account/register.php';
-
+            require_once elgg_get_plugins_path() . 'inviteonly/pages/register.php';
             return true;
         }
 
