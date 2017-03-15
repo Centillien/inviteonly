@@ -10,7 +10,7 @@
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>
-		<type>myvox_release</type>
+		<type>elgg_release</type>
 		<version>1.8</version>
 	</requires>
 	<activate_on_install>true</activate_on_install>
