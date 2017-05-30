@@ -11,7 +11,17 @@ function inviteonly_init() {
     elgg_unregister_page_handler('register');
     elgg_register_page_handler('register', 'inviteonly_page_handler');
 
-    elgg_register_page_handler('invite-only', 'inviteonly_page_handler');
+    elgg_register_page_handler('invite-only', 'inviteonly_page_handler');\
+    elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'register_public')
+}
+
+/**
+ * Extend the public pages walled garden
+ *
+ */
+function expages_public($hook, $handler, $return, $params){
+        $pages = array('register', 'invite-only');
+        return array_merge($pages, $return);
 }
 
 /**
